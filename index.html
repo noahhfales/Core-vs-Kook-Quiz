@@ -3,22 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kook vs. Core Lord Test</title>
+  <title>Kook vs. Core Lord Surf Test</title>
   <style>
-    body { font-family: Arial, sans-serif; background:#f3f6fa; margin:0; padding:20px; }
-    h1 { text-align:center; margin-bottom:30px; }
-    .question { background:white; padding:15px; margin-bottom:10px; border-radius:8px; }
-    button { padding:15px 20px; font-size:18px; border:none; border-radius:8px; cursor:pointer; }
-    #results { margin-top:30px; font-size:22px; background:white; padding:20px; border-radius:8px; display:none; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef3f7;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2rem;
+    }
+    .question {
+      background: white;
+      padding: 15px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      border: 1px solid #d9e1e8;
+    }
+    button {
+      padding: 15px 22px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      background: #0077ff;
+      color: white;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background: #005ed1;
+    }
+    #results {
+      margin-top: 30px;
+      font-size: 22px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      display: none;
+      border: 1px solid #d9e1e8;
+    }
   </style>
 </head>
 <body>
 
-<h1>Surf Kook vs. Core Lord Test</h1>
+<h1>Surf Kook vs. Core Lord Test 🏄‍♂️</h1>
 
 <div id="questions"></div>
 
-<div style="text-align:center; margin-top:20px;">
+<div style="text-align:center;">
   <button onclick="calculateScore()">Submit Test</button>
 </div>
 
@@ -85,15 +121,15 @@ function calculateScore() {
   let message = "";
 
   if (score <= 5) {
-    message = "🏄‍♂️ **Certified Core Lord** — You probably wax rails for fun and bully groms at your local.";
+    message = "🏄‍♂️ <strong>Certified Core Lord</strong> — You wax your rails for fun and locals nod at you with respect.";
   } else if (score <= 12) {
-    message = "🏄‍♂️ **Pretty Core, Slightly Sus** — You've got some kook tendencies but still respected.";
+    message = "😎 <strong>Pretty Core, Slightly Sus</strong> — You've got some kook tendencies, but overall you're legit.";
   } else if (score <= 20) {
-    message = "🌀 **Intermediate Kook** — You say ‘dude’ too much and drop in sometimes.";
+    message = "🌀 <strong>Intermediate Kook</strong> — You say ‘dude’ too much, drop in occasionally, and think the swell 'looked bigger on Surfline.'";
   } else if (score <= 26) {
-    message = "🌊 **Advanced Kook** — You have no idea why people are glaring at you in the lineup.";
+    message = "🌊 <strong>Advanced Kook</strong> — You are a full liability at crowded point breaks. Locals watch you with concern.";
   } else {
-    message = "🚨 **Mega Kook Alert** — You are a danger to yourself and others. Please return your surfboard.";
+    message = "🚨 <strong>Mega Kook Alert</strong> — You are a danger to yourself and everyone else. Please return your surfboard to Costco immediately.";
   }
 
   const results = document.getElementById("results");
