@@ -19,16 +19,12 @@
     .question {
       background: white;
       padding: 15px;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       border-radius: 8px;
       border: 1px solid #d9e1e8;
     }
-    select {
-      padding: 10px;
-      width: 100%;
-      margin-top: 8px;
-      border-radius: 6px;
-      font-size: 16px;
+    .answer {
+      margin: 8px 0;
     }
     button {
       padding: 15px 22px;
@@ -70,51 +66,51 @@ const questions = [
   {
     q: "Do you watch the WSL?",
     answers: [
-      { text: "Never", value: 0 },
-      { text: "Sometimes", value: 1 },
-      { text: "Occasionally", value: 2 },
-      { text: "Often", value: 3 },
-      { text: "Always, every heat", value: 5 }
+      { text: "Yes, every event and every heat", value: 5 },
+      { text: "Yes, but only for specific surfers", value: 2 },
+      { text: "I'll only watch finals day", value: 2 },
+      { text: "If it's pumping I'll watch a heat or two", value: 1 },
+      { text: "F**k the WSL", value: 0 }
     ]
   },
   {
     q: "Where do you usually buy your boards?",
     answers: [
-      { text: "I shape my own boards", value: 0 },
+      { text: "On Craigslist, OfferUp, FB Marketplace, etc.", value: 2 },
+      { text: "Fresh off the rack at the local surf shop", value: 4 },
+      { text: "Buy used but from a retail shop", value: 3 },
       { text: "From a friend who is a shaper", value: 1 },
-      { text: "Used from a retail shop", value: 2 },
-      { text: "New from local surf shop", value: 3 },
-      { text: "Brand new, hype boards only", value: 5 }
+      { text: "I shape my own boards", value: 0 }
     ]
   },
   {
-    q: "Your buddy asks how the waves look when you arrive at the beach. Your response?",
+    q: "You pull up to the beach and the waves are all-time. Your buddy asks how it looks. What's your response?",
     answers: [
-      { text: "Ignore and paddle out solo", value: 0 },
-      { text: "Looks okay, I'll go surf", value: 1 },
-      { text: "Waves seem fun!", value: 2 },
-      { text: "All-time, barrels everywhere!", value: 3 },
-      { text: "Post on IG first, tell everyone it's on!", value: 5 }
+      { text: "Waves are sick! We're out there!", value: 2 },
+      { text: "Looks decent. Couple fun ones here and there", value: 1 },
+      { text: "Ignore his text and paddle out by yourself. Why surf with a crowd?", value: 0 },
+      { text: "Dude... fucking all-time out there, barrels left and right. We're going to score!", value: 4 },
+      { text: "Tell your buddy (and every other surf groupchat you're in) that it's on, then post a story of the spot on Instagram before suiting up", value: 5 }
     ]
   },
   {
-    q: "You forgot a leash and waves are firing. What do you do?",
+    q: "You forgot a leash and the waves are firing. What do you do?",
     answers: [
-      { text: "Go out anyway without leash", value: 0 },
-      { text: "Skip session", value: 1 },
-      { text: "Borrow a leash", value: 2 },
-      { text: "Buy new at surf shop", value: 3 },
-      { text: "Panic and take selfies before deciding", value: 5 }
+      { text: "Paddle out without one", value: 1 },
+      { text: "Turn around and head home to grab one", value: 3 },
+      { text: "Go to the surf shop across the street and buy a new one", value: 5 },
+      { text: "Ask a stranger if you can borrow a leash", value: 3 },
+      { text: "You didn't forget because you dont wear a leash anyways", value: 0 }
     ]
   },
   {
-    q: "Have you ever posted surf clips on Instagram?",
+    q: "Do you post clips on Instagram?",
     answers: [
-      { text: "Never", value: 0 },
-      { text: "Rarely", value: 1 },
-      { text: "Sometimes", value: 2 },
-      { text: "Often", value: 3 },
-      { text: "All the time", value: 5 }
+      { text: "No, I hate seeing myself surf", value: 3 },
+      { text: "I'll post some but only if I'm getting tubed", value: 1 },
+      { text: "Of course! I even have story highlight on my profile of all my clips", value: 4 },
+      { text: "I have but it's rare", value: 2 },
+      { text: "What the fuck is an Instagram?", value: 1 }
     ]
   },
   {
@@ -169,24 +165,23 @@ const questions = [
   }
 ];
 
-// Render questions
+// Render questions with radio buttons
 const container = document.getElementById("questions");
 
 questions.forEach((qObj, i) => {
   const div = document.createElement("div");
   div.className = "question";
 
-  const options = qObj.answers
-    .map(a => `<option value="${a.value}">${a.text}</option>`)
-    .join("");
+  let answersHTML = qObj.answers.map((a, j) => `
+    <div class="answer">
+      <label>
+        <input type="radio" name="q${i}" value="${a.value}"> ${a.text}
+      </label>
+    </div>
+  `).join("");
 
-  div.innerHTML = `
-    <p><strong>${i + 1}.</strong> ${qObj.q}</p>
-    <select id="q${i}">
-      <option value="" disabled selected>Select your answer</option>
-      ${options}
-    </select>
-  `;
+  div.innerHTML = `<p><strong>${i + 1}.</strong> ${qObj.q}</p>${answersHTML}`;
+
   container.appendChild(div);
 });
 
@@ -194,12 +189,12 @@ questions.forEach((qObj, i) => {
 function calculateScore() {
   let total = 0;
   for (let i = 0; i < questions.length; i++) {
-    const val = document.getElementById(`q${i}`).value;
-    if (!val) {
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    if (!selected) {
       alert("Please answer all questions.");
       return;
     }
-    total += Number(val);
+    total += Number(selected.value);
   }
 
   let message = "";
