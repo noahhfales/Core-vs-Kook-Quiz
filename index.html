@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kook vs. Core Lord Surf Test</title>
+  <title>Are you a Kook or a Core Lord?</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -15,14 +15,20 @@
     h1 {
       text-align: center;
       margin-bottom: 30px;
-      font-size: 2rem;
     }
     .question {
       background: white;
       padding: 15px;
-      margin-bottom: 12px;
+      margin-bottom: 15px;
       border-radius: 8px;
       border: 1px solid #d9e1e8;
+    }
+    select {
+      padding: 10px;
+      width: 100%;
+      margin-top: 8px;
+      border-radius: 6px;
+      font-size: 16px;
     }
     button {
       padding: 15px 22px;
@@ -32,7 +38,8 @@
       background: #0077ff;
       color: white;
       cursor: pointer;
-      margin-top: 20px;
+      display: block;
+      margin: 25px auto;
     }
     button:hover {
       background: #005ed1;
@@ -50,91 +57,166 @@
 </head>
 <body>
 
-<h1>Surf Kook vs. Core Lord Test 🏄‍♂️</h1>
+<h1>Are you a Kook or a Core Lord?🏄‍♂️</h1>
 
 <div id="questions"></div>
 
-<div style="text-align:center;">
-  <button onclick="calculateScore()">Submit Test</button>
-</div>
+<button onclick="calculateScore()">Submit Test</button>
 
 <div id="results"></div>
 
 <script>
-// Questions
+/*
+ Each answer choice has a "text" label and "value" (weight).
+ Lower/negative = CORE LORD
+ Higher/positive = KOOK
+*/
+
 const questions = [
-  "Have you ever dropped in on someone and pretended you didn't see them?",
-  "Have you ever worn a surf hat with a chin strap?",
-  "Do you claim your waves (throw hands up, hoot loudly)?",
-  "Have you ridden a Wavestorm after your first year of surfing?",
-  "Do you snake friends... or strangers?",
-  "Have you ever posted a surf clip where you didn't make the wave?",
-  "Do you film every session?",
-  "Do you surf with AirPods?",
-  "Have you ever said: 'Bro, the waves were so good yesterday'?",
-  "Have you ever surfed in a full suit when everyone else is trunking?",
-  "Have you ever paddled straight to the peak your first time at a new spot?",
-  "Do you ditch your board instead of duck diving?",
-  "Have you surfed a crowded tourist spot by choice?",
-  "Have you ever called 2–3ft waves 'pumping'?",
-  "Do you surf only point breaks because beach breaks are 'too heavy'?",
-  "Have you ever asked 'who has right of way?' mid-wave?",
-  "Have you ever pearled on takeoff more than once in one session?",
-  "Have you ever ridden a soft-top at Pipeline (or wanted to)?",
-  "Do you ask strangers what board you should buy?",
-  "Have you ever yelled 'Yewww!' after someone else’s mediocre wave?",
-  "Have you ever paddled for a wave you clearly weren’t going to catch?",
-  "Do you ride boards with volume way above your level?",
-  "Do you ask locals where the 'secret spots' are?",
-  "Do you wear booties in warm water?",
-  "Have you ever taken a GoPro mouth mount selfie?",
-  "Have you ever called your surfboard a 'stick' unironically?",
-  "Do you post 'sunset surf' pictures with no surfing in them?",
-  "Do you say “It’s too crowded to surf” and go home?",
-  "Have you ever paddled out without checking the conditions?",
-  "Do you talk more about surfing than you actually surf?"
+  {
+    q: "Do you watch the WSL?",
+    answers: [
+      { text: "Yes, every event and every heat", value: 5 },
+      { text: "Yes, but only for specific surfers", value: 3 },
+      { text: "I'll only watch finals day", value: 2},
+      { text: "If it's pumping I'll watch a heat or two", value: 1 },
+      { text: "F**k the WSL", value: 0 }
+    ]
+  },
+  {
+    q: "Where do you usually buy your boards?",
+    answers: [
+      { text: "On Craigslist, OfferUp, FB Marketplace, etc.", value: 2},
+      { text: "Fresh off the rack at the local surf shop", value: 5 },
+      { text: "Buy used but from a retail shop", value: 4 },
+      { text: "From a friend who is a shaper", value: 1 }
+      { text: "I shape my own boards", value: 0}
+    ]
+  },
+  {
+    q: "You pull up to the beach and the waves are all-time. Your buddy asks how it looks. What's your response?",
+    answers: [
+      { text: "'Waves seem pretty fun! We're out there!'", value: 3 },
+      { text: "'Looks decent. Couple fun ones here and there'", value: 2 },
+      { text: "Ignore his text and paddle out by yourself (why surf with a crowd?)", value: 0}
+      { text: "'Dude... fucking all-time out there, barrels left and right. We're going to score!'", value: 4 }
+      { text: "Tell your buddy (and every other surf groupchat you're in) that it's on and post a story of the spot on Instagram before suiting up", value: 5}
+    ]
+  },
+  {
+    q: "You forgot a leash and the waves are firing. What do you do?",
+    answers: [
+      { text: "Paddle out without one", value: 1 },
+      { text: "Turn around and head home to grab one", value: 2 },
+      { text: "Go to the surf shop across the street and buy a new one", value: 5 }
+      { text: "Ask a stranger if you can borrow a leash", value: 4 }
+      { text: "You didn't forget because you dont wear a leash anyways", value: 0}
+    ]
+  },
+  {
+    q: "Have you ever posted clips of yourself on Instragram?",
+    answers: [
+      { text: "No, I’m allergic to cameras", value: 1 },
+      { text: "I'll post a story from time to time", value: 3 },
+      { text: "Of course! I love posting clips", value: 4 }
+      { text: "If I get a sick one then maybe", value: 2 }
+      { text: "What the fuck is an Instagram?", value: 0 }
+    ]
+  },
+  {
+    q: "What's your etiquette knowledge?",
+    answers: [
+      { text: "Flawless. You teach groms the rules.", value: -2 },
+      { text: "Decent. You try.", value: 0 },
+      { text: "What etiquette?", value: 3 }
+    ]
+  },
+  {
+    q: "How do you talk about surfing?",
+    answers: [
+      { text: "Rarely, unless someone asks", value: -1 },
+      { text: "A normal amount", value: 0 },
+      { text: "Constantly. Even to non-surfers.", value: 3 }
+    ]
+  },
+  {
+    q: "What's your surf fashion vibe?",
+    answers: [
+      { text: "Old faded boardshorts, sun-bleached hat", value: -2 },
+      { text: "Whatever’s clean", value: 0 },
+      { text: "Fresh fit every session. Matching wetsuit & leash.", value: 3 }
+    ]
+  },
+  {
+    q: "How do you choose where to sit in the lineup?",
+    answers: [
+      { text: "Observe the spot, respect the locals, position smartly", value: -2 },
+      { text: "Sit near the pack", value: 1 },
+      { text: "Paddle straight to the peak *first day there*", value: 4 }
+    ]
+  },
+  {
+    q: "What’s your relationship with soft tops?",
+    answers: [
+      { text: "Fun for messing around only", value: 0 },
+      { text: "My primary board", value: 3 },
+      { text: "Pipeline soft-top warrior (or want to be)", value: 5 }
+    ]
+  }
 ];
 
-// Render Questions
+// Render the questions dynamically
 const container = document.getElementById("questions");
 
-questions.forEach((q, i) => {
+questions.forEach((qObj, i) => {
   const div = document.createElement("div");
   div.className = "question";
+
+  let options = qObj.answers
+    .map((a, j) => `<option value="${a.value}">${a.text}</option>`)
+    .join("");
+
   div.innerHTML = `
-    <p><strong>${i+1}.</strong> ${q}</p>
-    <label><input type="checkbox" id="q${i}" /> Yes, that's me</label>
+    <p><strong>${i + 1}.</strong> ${qObj.q}</p>
+    <select id="q${i}">
+      <option value="" disabled selected>Select your answer</option>
+      ${options}
+    </select>
   `;
+
   container.appendChild(div);
 });
 
-// Calculate Score
+// Scoring logic
 function calculateScore() {
-  let score = 0;
+  let total = 0;
 
-  questions.forEach((_, i) => {
-    if (document.getElementById(`q${i}`).checked) {
-      score++;
+  for (let i = 0; i < questions.length; i++) {
+    const val = document.getElementById(`q${i}`).value;
+    if (!val) {
+      alert("Please answer all questions.");
+      return;
     }
-  });
+    total += Number(val);
+  }
 
   let message = "";
 
-  if (score <= 5) {
-    message = "🏄‍♂️ <strong>Certified Core Lord</strong> — You wax your rails for fun and locals nod at you with respect.";
-  } else if (score <= 12) {
-    message = "😎 <strong>Pretty Core, Slightly Sus</strong> — You've got some kook tendencies, but overall you're legit.";
-  } else if (score <= 20) {
-    message = "🌀 <strong>Intermediate Kook</strong> — You say ‘dude’ too much, drop in occasionally, and think the swell 'looked bigger on Surfline.'";
-  } else if (score <= 26) {
-    message = "🌊 <strong>Advanced Kook</strong> — You are a full liability at crowded point breaks. Locals watch you with concern.";
+  if (total <= -5) {
+    message = "🏄‍♂️ **CORE LORD** — You are the reef-scarred, dawn-patrolling, etiquette-enforcing hero the lineup needs.";
+  } else if (total <= 10) {
+    message = "😎 **Mostly Core** — A few kooky habits, but still respected in most lineups.";
+  } else if (total <= 20) {
+    message = "🌀 **Balanced Kook** — A walking contradiction: part shredder, part hazard.";
+  } else if (total <= 30) {
+    message = "🌊 **Advanced Kook** — Soft-top energy radiates from your soul. You scare locals a little.";
   } else {
-    message = "🚨 <strong>Mega Kook Alert</strong> — You are a danger to yourself and everyone else. Please return your surfboard to Costco immediately.";
+    message = "🚨 **MEGA KOOK** — You are a one-person closeout. Costco should sponsor you.";
   }
 
-  const results = document.getElementById("results");
-  results.style.display = "block";
-  results.innerHTML = `<strong>Your Score: ${score} / ${questions.length}</strong><br><br>${message}`;
+  document.getElementById("results").style.display = "block";
+  document.getElementById("results").innerHTML =
+    `<strong>Your Total Score: ${total}</strong><br><br>${message}`;
 }
 </script>
 
