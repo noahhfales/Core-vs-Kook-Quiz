@@ -57,7 +57,7 @@
 </head>
 <body>
 
-<h1>Are you a Kook or a Core Lord?🏄‍♂️</h1>
+<h1>Are you a Kook or a Core Lord? 🏄‍♂️</h1>
 
 <div id="questions"></div>
 
@@ -66,19 +66,13 @@
 <div id="results"></div>
 
 <script>
-/*
- Each answer choice has a "text" label and "value" (weight).
- Lower/negative = CORE LORD
- Higher/positive = KOOK
-*/
-
 const questions = [
   {
     q: "Do you watch the WSL?",
     answers: [
       { text: "Yes, every event and every heat", value: 5 },
       { text: "Yes, but only for specific surfers", value: 3 },
-      { text: "I'll only watch finals day", value: 2},
+      { text: "I'll only watch finals day", value: 2 },
       { text: "If it's pumping I'll watch a heat or two", value: 1 },
       { text: "F**k the WSL", value: 0 }
     ]
@@ -86,11 +80,11 @@ const questions = [
   {
     q: "Where do you usually buy your boards?",
     answers: [
-      { text: "On Craigslist, OfferUp, FB Marketplace, etc.", value: 2},
+      { text: "On Craigslist, OfferUp, FB Marketplace, etc.", value: 2 },
       { text: "Fresh off the rack at the local surf shop", value: 5 },
       { text: "Buy used but from a retail shop", value: 4 },
-      { text: "From a friend who is a shaper", value: 1 }
-      { text: "I shape my own boards", value: 0}
+      { text: "From a friend who is a shaper", value: 1 },
+      { text: "I shape my own boards", value: 0 }
     ]
   },
   {
@@ -98,9 +92,9 @@ const questions = [
     answers: [
       { text: "'Waves seem pretty fun! We're out there!'", value: 3 },
       { text: "'Looks decent. Couple fun ones here and there'", value: 2 },
-      { text: "Ignore his text and paddle out by yourself (why surf with a crowd?)", value: 0}
-      { text: "'Dude... fucking all-time out there, barrels left and right. We're going to score!'", value: 4 }
-      { text: "Tell your buddy (and every other surf groupchat you're in) that it's on and post a story of the spot on Instagram before suiting up", value: 5}
+      { text: "Ignore his text and paddle out by yourself (why surf with a crowd?)", value: 0 },
+      { text: "'Dude... fucking all-time out there, barrels left and right. We're going to score!'", value: 4 },
+      { text: "Tell your buddy (and every other surf groupchat you're in) that it's on and post a story of the spot on Instagram before suiting up", value: 5 }
     ]
   },
   {
@@ -108,18 +102,18 @@ const questions = [
     answers: [
       { text: "Paddle out without one", value: 1 },
       { text: "Turn around and head home to grab one", value: 2 },
-      { text: "Go to the surf shop across the street and buy a new one", value: 5 }
-      { text: "Ask a stranger if you can borrow a leash", value: 4 }
-      { text: "You didn't forget because you dont wear a leash anyways", value: 0}
+      { text: "Go to the surf shop across the street and buy a new one", value: 5 },
+      { text: "Ask a stranger if you can borrow a leash", value: 4 },
+      { text: "You didn't forget because you don't wear a leash anyways", value: 0 }
     ]
   },
   {
-    q: "Have you ever posted clips of yourself on Instragram?",
+    q: "Have you ever posted clips of yourself on Instagram?",
     answers: [
       { text: "No, I’m allergic to cameras", value: 1 },
       { text: "I'll post a story from time to time", value: 3 },
-      { text: "Of course! I love posting clips", value: 4 }
-      { text: "If I get a sick one then maybe", value: 2 }
+      { text: "Of course! I love posting clips", value: 4 },
+      { text: "If I get a sick one then maybe", value: 2 },
       { text: "What the fuck is an Instagram?", value: 0 }
     ]
   },
@@ -165,7 +159,7 @@ const questions = [
   }
 ];
 
-// Render the questions dynamically
+// Render the questions
 const container = document.getElementById("questions");
 
 questions.forEach((qObj, i) => {
@@ -173,7 +167,7 @@ questions.forEach((qObj, i) => {
   div.className = "question";
 
   let options = qObj.answers
-    .map((a, j) => `<option value="${a.value}">${a.text}</option>`)
+    .map((a) => `<option value="${a.value}">${a.text}</option>`)
     .join("");
 
   div.innerHTML = `
@@ -187,7 +181,7 @@ questions.forEach((qObj, i) => {
   container.appendChild(div);
 });
 
-// Scoring logic
+// Scoring
 function calculateScore() {
   let total = 0;
 
@@ -214,9 +208,9 @@ function calculateScore() {
     message = "🚨 **MEGA KOOK** — You are a one-person closeout. Costco should sponsor you.";
   }
 
-  document.getElementById("results").style.display = "block";
-  document.getElementById("results").innerHTML =
-    `<strong>Your Total Score: ${total}</strong><br><br>${message}`;
+  const results = document.getElementById("results");
+  results.style.display = "block";
+  results.innerHTML = `<strong>Your Total Score: ${total}</strong><br><br>${message}`;
 }
 </script>
 
