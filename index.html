@@ -3,67 +3,127 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Are you a Kook or a Core Lord?</title>
+  <title>🏄‍♂️ Where Do You Land on the Surf Spectrum? 🏄‍♂️</title>
+
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #eef3f7;
+      font-family: "Trebuchet MS", sans-serif;
+      background: linear-gradient(to bottom right, #b5e8ff, #87d4ff);
       margin: 0;
       padding: 20px;
       line-height: 1.6;
     }
+
     h1 {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 10px;
+      font-family: "Papyrus", "Brush Script MT", "Trebuchet MS", cursive;
+      font-size: 42px;
+      color: #004b6b;
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 0px white;
     }
-    .question {
-      background: white;
-      padding: 15px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      border: 1px solid #d9e1e8;
-    }
-    .answer {
-      margin: 8px 0;
-    }
-    button {
-      padding: 15px 22px;
+
+    /* Intro text under the title */
+    #intro {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 25px auto;
       font-size: 18px;
-      border: none;
+      color: #003f55;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 15px 20px;
       border-radius: 10px;
-      background: #0077ff;
+      border: 1px solid #9ed8f7;
+      box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+    }
+
+    #instructions {
+      text-align: center;
+      font-size: 17px;
+      color: #004b6b;
+      margin-bottom: 30px;
+      font-weight: bold;
+    }
+
+    .question {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 18px;
+      margin-bottom: 22px;
+      border-radius: 12px;
+      border: 1px solid #9ed8f7;
+      box-shadow: 0px 3px 6px rgba(0,0,0,0.1);
+    }
+
+    .question p {
+      font-size: 19px;
+      color: #004b6b;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .answer {
+      margin: 10px 0;
+      font-size: 17px;
+      color: #003f55;
+    }
+
+    button {
+      padding: 15px 25px;
+      font-size: 20px;
+      border: none;
+      border-radius: 12px;
+      background: #0077c2;
       color: white;
       cursor: pointer;
       display: block;
-      margin: 25px auto;
+      margin: 30px auto;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      transition: 0.2s;
     }
+
     button:hover {
-      background: #005ed1;
+      background: #005e99;
+      transform: scale(1.03);
     }
+
     #results {
-      margin-top: 30px;
-      font-size: 22px;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
+      margin-top: 35px;
+      font-size: 24px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 22px;
+      border-radius: 12px;
+      border: 1px solid #9ed8f7;
       display: none;
-      border: 1px solid #d9e1e8;
+      box-shadow: 0px 3px 6px rgba(0,0,0,0.1);
+      color: #003f55;
     }
   </style>
 </head>
+
 <body>
 
-<h1>Are you a Kook or a Core Lord? 🏄‍♂️</h1>
+<h1>🏄‍♂️ Where Do YOU Land on the Surf Spectrum? 🏄‍♂️</h1>
+
+<div id="intro">
+  <p><em>The Surf Spectrum test does not directly correlate with your wave riding ability, but it does give a glimpse into your tendencies (both in and out of the water) and your overall surf authenticity. Whether you're a Florence Marine X stan or a potato chip charger on a 2 foot day, this test will tell you where you fall between Kook and Core Lord.</em></p>
+</div>
+
+<div id="instructions">
+  For each question, click on the answer that best aligns with your surfing ability and personality.
+
+  And be honest... we all know you don't rip THAT hard.
+</div>
 
 <div id="questions"></div>
 
-<button onclick="calculateScore()">Submit Test</button>
+<button onclick="calculateScore()">Surf My Score</button>
 
 <div id="results"></div>
 
 <script>
 const questions = [
-  {
+   {
     q: "Do you watch the WSL?",
     answers: [
       { text: "Yes, every event and every heat", value: 5 },
@@ -165,50 +225,47 @@ const questions = [
   }
 ];
 
-// Render questions with radio buttons
+// Render questions
 const container = document.getElementById("questions");
 
 questions.forEach((qObj, i) => {
   const div = document.createElement("div");
   div.className = "question";
 
-  let answersHTML = qObj.answers.map((a, j) => `
+  let answersHTML = qObj.answers
+    .map(
+      (a, j) => `
     <div class="answer">
       <label>
         <input type="radio" name="q${i}" value="${a.value}"> ${a.text}
       </label>
-    </div>
-  `).join("");
+    </div>`
+    )
+    .join("");
 
   div.innerHTML = `<p><strong>${i + 1}.</strong> ${qObj.q}</p>${answersHTML}`;
-
   container.appendChild(div);
 });
 
-// Calculate score
+// Score calculation
 function calculateScore() {
   let total = 0;
+
   for (let i = 0; i < questions.length; i++) {
     const selected = document.querySelector(`input[name="q${i}"]:checked`);
     if (!selected) {
-      alert("Please answer all questions.");
+      alert("Please answer all questions before shredding your score 🤙");
       return;
     }
     total += Number(selected.value);
   }
 
   let message = "";
-  if (total <= 10) {
-    message = "🏄‍♂️ CORE LORD — Perfect etiquette, respectful, and solid in the lineup.";
-  } else if (total <= 20) {
-    message = "😎 Mostly Core — Some kooky habits, but still respected.";
-  } else if (total <= 30) {
-    message = "🌀 Balanced Kook — A mix of shredder and kook energy.";
-  } else if (total <= 40) {
-    message = "🌊 Advanced Kook — Locals may be wary of your antics.";
-  } else {
-    message = "🚨 MEGA KOOK — Chaos incarnate in the lineup. Beware!";
-  }
+  if (total <= 10) message = "🏄‍♂️ **CORE LORD** — A true salt-crusted waterman.";
+  else if (total <= 20) message = "😎 **Mostly Core** — You know your place in the lineup.";
+  else if (total <= 30) message = "🌀 **Balanced Mix** — Yin and yang of surf identity.";
+  else if (total <= 40) message = "🌊 **Advanced Kook** — Your energy is highly detectable.";
+  else message = "🚨 **MEGA KOOK** — Chaos follows you like a rogue set.";
 
   const results = document.getElementById("results");
   results.style.display = "block";
