@@ -235,20 +235,21 @@
   {
     q: "Do you know who this is?",
     answers: [
-      { text: "Yes I do", value: 0 },
-      { text: "Looks familiar but don't know his name", value: 3 },
-      { text: "No idea", value: 4 },
-      { text: "Yes (but only after a Google search)", value: 4 },
+      { text: "Yes I do", type: ["Core Lord", "Aspiring Regulator", "Surf Nerd"] },
+      { text: "Looks familiar but don't know his name", type: ["Soul Surfer", "Leatherbacked Local", "Weekend Warrior", "Grom"] },
+      { text: "No idea", type: ["Adult Learner", "Soul Surfer", "Total Kook", "Grom"] },
+      { text: "Yes (but only after a Google search)", type: ["Corporate Drone", "Surf Nerd"] },
+      { text: "Who cares", type: ["Total Kook", "Grom"] },
     ]
   },
   {
     q: "After rolling right out of bed for dawn patrol, what clothes are you putting on to go and check the surf?",
     answers: [
-      { text: "Shorts and a hoodie", value: 2 },
-      { text: "Some jeans and a crusty flannel", value: 2 },
-      { text: "T-shirt and trunks (that you slept in so no need to change)", value: 1 },
-      { text: "Vuori sweats and a Patagonia jacket", value: 4 },
-      { text: "I change into my suit at home to save time", value: 5 }
+      { text: "Shorts and a hoodie", type: ["Core Lord", "Aspiring Regulator", "Soul Surfer"] },
+      { text: "Some jeans and a crusty flannel", type: ["Core Lord", "Aspiring Regulator", "Leatherbacked Local"] },
+      { text: "T-shirt and trunks (that you slept in so no need to change)", type: ["Leatherbacked Local", "Grom", "Soul Surfer"]  },
+      { text: "Vuori sweats and a Patagonia jacket", type: ["Corporate Drone", "Surf Nerd", "Adult Learner"] },
+      { text: "I change into my suit at home to save time", type: ["Weekend Warrior", "Surf Nerd", "Total Kook", "Grom"] }
     ]
   },
   {
