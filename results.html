@@ -1,118 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>🌊 Your Surf Spectrum Score 🌊</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Surf Spectrum Result 🏄‍♂️</title>
+  <style>
+    body {
+      font-family: "Trebuchet MS", sans-serif;
+      background: linear-gradient(to bottom right, #b5e8ff, #87d4ff);
+      margin: 0;
+      padding: 20px;
+      line-height: 1.6;
+      color: #003f55;
+      text-align: center;
+    }
 
-<style>
-  body {
-    font-family: "Trebuchet MS", sans-serif;
-    background: linear-gradient(to bottom right, #b5e8ff, #87d4ff);
-    margin: 0;
-    padding: 20px;
-    color: #003f55;
-    text-align: center;
-  }
+    h1 {
+      font-family: "Papyrus", "Brush Script MT", "Trebuchet MS", cursive;
+      font-size: 42px;
+      color: #004b6b;
+      text-shadow: 1px 1px 0px white;
+      margin-bottom: 15px;
+    }
 
-  h1 {
-    font-family: "Papyrus", "Brush Script MT", "Trebuchet MS", cursive;
-    font-size: 40px;
-    color: #004b6b;
-    text-shadow: 1px 1px 0px white;
-    margin-bottom: 15px;
-  }
+    #result-container {
+      max-width: 800px;
+      margin: 30px auto;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 25px;
+      border-radius: 12px;
+      border: 1px solid #9ed8f7;
+      box-shadow: 0px 3px 6px rgba(0,0,0,0.1);
+    }
 
-  #score-box {
-    background: rgba(255, 255, 255, 0.9);
-    max-width: 700px;
-    margin: 25px auto;
-    padding: 25px;
-    border-radius: 15px;
-    border: 1px solid #9ed8f7;
-    box-shadow: 0px 3px 6px rgba(0,0,0,0.15);
-  }
+    #personality-name {
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #0077c2;
+    }
 
-  #result-text {
-    font-size: 22px;
-    margin-top: 20px;
-  }
+    #personality-desc {
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
 
-  .score-number {
-    font-size: 55px;
-    font-weight: bold;
-    color: #005e99;
-    text-shadow: 1px 1px white;
-  }
+    button {
+      padding: 15px 25px;
+      font-size: 20px;
+      border: none;
+      border-radius: 12px;
+      background: #0077c2;
+      color: white;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      transition: 0.2s;
+    }
 
-  a {
-    text-decoration: none;
-  }
-
-  button {
-    margin-top: 35px;
-    padding: 14px 24px;
-    font-size: 18px;
-    border: none;
-    border-radius: 12px;
-    background: #0077c2;
-    color: white;
-    cursor: pointer;
-    transition: 0.2s;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.25);
-  }
-
-  button:hover {
-    background: #005e99;
-    transform: scale(1.03);
-  }
-</style>
+    button:hover {
+      background: #005e99;
+      transform: scale(1.03);
+    }
+  </style>
 </head>
-
 <body>
 
-<h1>🌊 Your Surf Spectrum Score 🌊</h1>
+<h1>🏄‍♂️ Your Surf Spectrum Results 🏄‍♂️</h1>
 
-<div id="score-box">
-  <div id="score-output" class="score-number"></div>
-  <div id="result-text"></div>
-
-  <a href="index.html">
-    <button>Take the Test Again</button>
-  </a>
+<div id="result-container">
+  <div id="personality-name"></div>
+  <div id="personality-desc"></div>
+  <button onclick="goBack()">Take the Quiz Again</button>
 </div>
 
 <script>
-  // Read the score from URL
-  const params = new URLSearchParams(window.location.search);
-  const score = Number(params.get("score"));
+  const personalities = {
+    "Leatherbacked Local": "You're likely the oldest person paddling out these days, and your mood can swing from totally frothed to downright miserable depending on how your session is going. Your ideal Wednesday afternoon is crushing Modelos in the parking lot and thoroughly examining everyone's boards without asking. Logs, midlengths, fishes, thrusters, you ride (and probably hand shape) them all. The lineup respects your presence, but also wants you to roll over and die because you 'accidently' burn someone on every set wave. A visit to the dermatologist for a skin cancer check wouldn't hurt",
+    "Core Lord": "Surfing is the only thing in your life that brings you joy, and in your opinion, it's being overrun by Instagram Influencers, Adult Learners, and the Democratic Party. You own a barely functional pick-up truck that you sleep out of since your wife took the house in the divorce. Most of the time you don't even surf anymore. Your days are spent either at the job site or in the beach parking lot, mumbling insults at transplants and twin-fin enthusiasts as they suit up. All that sulking and complaining really makes you fun to be around. Being a Core Lord is not something that you chose, but rather it slowly consumed you",
+    "Aspiring Regulator": "You definitely know your way around the block and you like playing the part of local enforcer, but are you really even a local? Some people call you a poser because you bog on every other wave, but they don't know the struggle of surfing a bladed out thruster and trying to make the QS. You've manicured your style, quiver, and overall vibe to match that of a Core Lord, but you aren't fooling anyone. With that said, you'll still suit up no matter the contions and pay your dues to let the people know who's in charge out there.",
+    "Soul Surfer": "For you, surfing is all about the joy and connection with the ocean. Just pure stoke and a raging hard-on for Torren Martyn. If given the chance, you'd make love to your twin-fin. Core Lords can't stand your existence, but we all know they envy your level of enlightenment. Whether your zen has been self-attained from years of practice or brought on manufactured after your month long hiatus in Bali (that your parents probably helped fund), you're just happy whenever there are waves. ",
+    "Surf Nerd": "You read Surfer, The Intertia, and Tracks Mag religiously. Your brain is like an encyclopedia on bottom contours, fin placement, and board designs. You've become some consumed by surfing lore that people don't even want to talk to you anymore for fear that you'll bring up stories about how Kelly stole the 2025 J-Bay title from Andy. You toe the line between core and corny closely, but your sheer knowledge puts you in your own category.",
+    "Weekend Warrior": "Whether it's work, travel, life, or a mix of everything, you make the most of your limited surf time. Dedicated, enthusiastic, but a packed schedule keeps you from getting in the water as much as you'd like to. Even if there are 100 guys out and it's 2ft, you're still out there on a Saturday morning. You generally bring positive vibes, but definitely fit the mold of a wave hog. Anyways, go take the kids to soccer practice",
+    "Corporate Drone": "Surfline Premium+? Check. Florence Marine X from head to toe? Check. Brand new Hypto Krypto? Check. You work in either tech or finance and got turned onto surfing by your Instagram algorithm. You wear an Apple watch to track how many waves you catch and use Siri while surfing to respond to work messages. Dawn patrol is your best friend and you love letting anyone and everyone know that you 'scored' on your trip to Hawaii (Flying in Business Class, of course)",
+    "Adult Learner": "Flashback to 2020... The world is on full lockdown, people are picking up new hobbies left and right. What do you do? You start surfing. You're commited to the grind but your progress is starting to plateau. You went from Costco foamie to Torq board and now you've taken the leap and gotten your first pop-out. A surf shop's dream customer and a Core Lords nightmare. Learn a thing or two about ettiquite and spend some more time in the water before you make your way to the top of the lineup. ",
+    "Grom": "Paddle, paddle, paddle little grom... Your diet consists of 7-11 pizza, Flamin' Hot Cheetos, and Skittles. Often the afterthought in the lineup, you still manage to somehow get waves and you aren't afraid to burn an Adult Learner. Your rambunctious behavior in the water draws the ire of every Core Lord in town and you've received your fair share of verbal abuse (most of which is warranted). Packing closeouts and getting ragdolled? Your favorite.",
+    "Total Kook": "Enough said. Go back to the valley."
+  };
 
-  const scoreOutput = document.getElementById("score-output");
-  const resultText = document.getElementById("result-text");
-
-  scoreOutput.textContent = score;
-
-  // Determine category
-  let message = "";
-
-  if (score <= 5) {
-    message = "🏄‍♂️ <strong>CORE LORD</strong><br>You are the reef-scarred, dawn-patrolling truth. The lineup respects you.";
-  } 
-  else if (score <= 15) {
-    message = "😎 <strong>Mostly Core</strong><br>You’ve got a couple kooky traits, but overall you hold your own.";
-  } 
-  else if (score <= 25) {
-    message = "🌀 <strong>Balanced Kook</strong><br>A perfect blend of stylish turns and questionable life choices.";
-  } 
-  else if (score <= 35) {
-    message = "🌊 <strong>Advanced Kook</strong><br>You radiate soft-top energy. Locals are slightly concerned.";
-  } 
-  else {
-    message = "🚨 <strong>MEGA KOOK</strong><br>You are a one-man closeout. Costco should sponsor you immediately.";
+  function getPersonalityFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("personality");
   }
 
-  resultText.innerHTML = message;
+  function displayResult() {
+    const personality = getPersonalityFromURL();
+    if (!personality || !personalities[personality]) {
+      document.getElementById("personality-name").innerText = "Hmm… Something went wrong!";
+      document.getElementById("personality-desc").innerText = "Please go back and complete the quiz to see your result.";
+      return;
+    }
+    document.getElementById("personality-name").innerText = personality;
+    document.getElementById("personality-desc").innerText = personalities[personality];
+  }
+
+  function goBack() {
+    window.location.href = "index.html";
+  }
+
+  displayResult();
 </script>
 
 </body>
 </html>
+
